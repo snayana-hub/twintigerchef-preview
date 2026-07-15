@@ -29,7 +29,8 @@
 <!-- ===== NAV ===== -->
 <header class="nav" id="nav">
   <a href="#top" class="brand" aria-label="Twin Tiger Chefs"><img src="assets/logo.png" alt="Twin Tiger Chefs" class="brand-logo"></a>
-  <nav class="navlinks">
+  <button class="navtoggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navlinks"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+  <nav class="navlinks" id="navlinks">
     <a href="#studio">The Studio</a>
     <div class="navdrop">
       <a href="#tina" class="navdrop-top">Chefs</a>
@@ -588,6 +589,21 @@ if(!document.documentElement.classList.contains('reveal-all')){
   document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
   window.addEventListener('load',function(){setTimeout(function(){document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});},1200);});
 }
+
+// Mobile nav hamburger toggle
+(function(){
+  var nav=document.getElementById('nav');
+  if(!nav) return;
+  var toggle=nav.querySelector('.navtoggle');
+  var links=nav.querySelector('.navlinks');
+  if(!toggle||!links) return;
+  function close(){nav.classList.remove('open');toggle.setAttribute('aria-expanded','false');}
+  function open(){nav.classList.add('open');toggle.setAttribute('aria-expanded','true');}
+  toggle.addEventListener('click',function(){nav.classList.contains('open')?close():open();});
+  links.addEventListener('click',function(e){if(e.target.closest('a'))close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  window.addEventListener('resize',function(){if(window.innerWidth>860)close();});
+})();
 </script>
 <script>
 // Contact form — submit to Web3Forms via fetch so the visitor never leaves the page.
@@ -630,4 +646,3 @@ if(!document.documentElement.classList.contains('reveal-all')){
 </script>
 </body>
 </html>
-
